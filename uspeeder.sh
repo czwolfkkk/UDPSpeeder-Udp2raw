@@ -22,15 +22,15 @@ read -p "请输入文件夹名称:" yourdir
 ifdir="/usr/src/"$yourdir
 if [ ! -d "$ifdir" ]; then
 #下载几个配置文件
-echo "键入本地代理软件监听的端口"
-read -p "请输入数字:" port
 echo "键入udpspeeder输出端口（代理软件监听端口-1），不要使用已占用端口"
 read -p "请输入数字:" udpspeederport
-echo "键入udp2raw监听的端口（udpspeeder输出端口-1），不要使用已占用端口"
-read -p "请输入数字:" udp2rawport
 
 mkdir /usr/src/$yourdir
 mkdir /usr/src/$yourdir/client
+
+echo "键入udp2raw监听的端口（udpspeeder输出端口-1），不要使用已占用端口"
+read -p "请输入数字:" udp2rawport
+
 cd /usr/src/$yourdir/client
 wget https://github.com/czwolfkkk/UDPSpeeder-Udp2raw/raw/master/client/speederv2.exe
 wget https://github.com/czwolfkkk/UDPSpeeder-Udp2raw/raw/master/client/udp2raw.exe
@@ -43,6 +43,8 @@ chmod +x speederv2_amd64 udp2raw_amd64
 
 #设置参数
 serverip=$(curl icanhazip.com)
+echo "键入本地代理软件监听的端口"
+read -p "请输入数字:" port
 sed -i "s/your_server_ip/$serverip/" /usr/src/$yourdir/client/start.bat
 sed -i "s/udp2raw_server_port/$udp2rawport/" /usr/src/$yourdir/client/start.bat
 
